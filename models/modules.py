@@ -7,7 +7,7 @@
 # Created:     11/10/2018
 # Copyright:   (c) kkrishnav 2018
 # Licence:     <your licence>
-# Sample JSON: {"module":"Module Name", "parent_module_id": 1, "description": "Description", "creator_id": 1, "is_active": True}
+# Sample JSON: {"module":"Module Name", "parent_module_id": null, "description": "Description", "creator_id": 1, "is_active": true}
 #-------------------------------------------------------------------------------------------------------------------------
 from root import db
 from models.options import Options
