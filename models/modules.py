@@ -34,6 +34,15 @@ class Modules(db.Model):
         return modules
 
     @classmethod
+    def get_modules_latest_count(classname, _count, id=None):
+        if id == None:
+            modules_list = Modules.query.order_by(classname.insert_date.desc()).limit(_count)
+        else: 
+            modules_list = Modules.query.filter_by(creator_id=id).order_by(classname.insert_date.desc()).limit(_count)
+        modules = [module.serialize() for module in modules_list]
+        return modules
+
+    @classmethod
     def get_module_from_id(classname, id):
         module = classname.query.get(id)
         return module

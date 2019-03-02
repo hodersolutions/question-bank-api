@@ -13,6 +13,24 @@ def api_modules_all():
     }
     return Response(dumps(responseObject), 200, mimetype='application/json')
 
+@application.route("/api/v1/modules/creator/<int:id>/latest/<int:count>", methods=["GET"])
+def api_modules_creator_latest_count(id, count):
+    responseObject = {
+        "status": "success",
+        "message": "Retrieved Modules successfully.",            
+        "modules": Modules.get_modules_latest_count(count, id)
+    }
+    return Response(dumps(responseObject), 200, mimetype='application/json')
+
+@application.route("/api/v1/modules/latest/<int:count>", methods=["GET"])
+def api_modules_latest_count(count):
+    responseObject = {
+        "status": "success",
+        "message": "Retrieved Modules successfully.",            
+        "modules": Modules.get_modules_latest_count(count, None)
+    }
+    return Response(dumps(responseObject), 200, mimetype='application/json')
+
 @application.route("/api/v1/modules", methods=["GET"])
 def api_modules():
     if 'id' in request.args:
