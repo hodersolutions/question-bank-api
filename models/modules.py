@@ -11,6 +11,7 @@
 #-------------------------------------------------------------------------------------------------------------------------
 from root import db
 from models.options import Options
+from datetime import datetime
 
 class Modules(db.Model):
     __tablename__ =  "modules"
@@ -20,6 +21,8 @@ class Modules(db.Model):
     description = db.Column(db.String(2000), nullable=True)
     creator_id = db.Column(db.Integer, nullable=False)    
     is_active = db.Column(db.Boolean, default=True)
+    insert_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
+    update_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
 
     def __repr__(self):
         return '{"id":{0}, "module":{1}, "parent":{2}}, "creator_id": {3}'.format(self.id, self.module, self.parent_module_id, self.creator_id)
@@ -69,7 +72,9 @@ class Modules(db.Model):
         'parent_module_id' : self.parent_module_id,
         'description': self.description,
         'creator_id': self.creator_id,
-        'is_active': self.is_active
+        'is_active': self.is_active,
+        'insert_date': str(self.insert_date),
+        'update_date': str(self.update_date)
         }
         return json_module
 

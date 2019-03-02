@@ -19,7 +19,7 @@ def api_token_validate():
 #---------------------------------------GET all users----------------------------------------------#
 
 @application.route("/api/v1/users/all", methods=["GET"])
-@token_required
+#@token_required
 def api_users_all():
     responseObject = {
         "status": "success",
@@ -159,12 +159,12 @@ def api_add_user():
         new_user.username = request_data["username"]
         new_user.password = request_data["password"]
         new_user.email = request_data["email"]
-        #To Do: add admin from client
+        #TODO: add admin from client
         responseObject = {
             'status': 'success',
             'message': 'Successfully registered.',
-           # 'user': Users.add_user(new_user)
-             'user': new_user.username
+            'user': Users.add_user(new_user)
+            #'user': new_user.username
         }
         response = Response(dumps(responseObject), 201, mimetype='application/json')
         return response
