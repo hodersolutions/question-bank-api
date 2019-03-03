@@ -162,10 +162,10 @@ def api_add_user():
         #TODO: add admin from client
         responseObject = {
             'status': 'success',
-            'message': 'Successfully registered.',
-            'user': Users.add_user(new_user)
-            #'user': new_user.username
+            'message': 'Successfully registered.',            
+            'user': new_user.username
         }
+        Users.add_user(new_user)
         response = Response(dumps(responseObject), 201, mimetype='application/json')
         return response
     else:

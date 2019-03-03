@@ -28,7 +28,8 @@ class Users(db.Model):
 	@classmethod
 	def username_password_match(classname, _email, _password):
 		user = classname.query.filter_by(email=_email).first()
-		if user and bcrypt.check_password_hash(user.password, _password):
+		#TODO: Encrypt password
+		if user and (user.password == _password):
 			return user
 		else:
 			return None
