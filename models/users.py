@@ -42,20 +42,23 @@ class Users(db.Model):
 		except Exception as e:
 			return e
 		
-		return classname.get_user_by_username(_user.username)
+		return classname.get_user_by_username(_user.username, False)
 
 	@classmethod
 	def get_all_users(classname):
 		return [user.serialize() for user in classname.query.all()]
 
 	@classmethod
-	def get_user_by_username(classname, _username):
+	def get_user_by_username(classname, _username, _with_password):
 		try:
 			user_object = classname.query.filter_by(username=_username).first()
 			if(user_object == None):
 				return user_object
 			else:
-				return user_object.serialize()
+				if (_with_password):
+					return user_object.serialize()
+				else:
+					return user_object.get_user()
 		except:
 			return False
 
@@ -91,7 +94,7 @@ class Users(db.Model):
 		except:
 			return False
 
-		return classname.get_user_by_username(_user.username)
+		return classname.get_user_by_username(_user.username, False)
 
 	@staticmethod
 	def validate_user(user):
@@ -99,6 +102,17 @@ class Users(db.Model):
 			return True
 		else:
 			return False
+
+	def get_user(self):
+		json_user = {
+			"id": self.id,
+			"username": self.username,
+			"email": self.email,
+			"registered_on": str(self.registered_on),
+			"admin": self.admin
+		}
+		return json_user
+
 
 	def encode_auth_token(self):
 		"""

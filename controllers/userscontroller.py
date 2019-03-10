@@ -6,13 +6,15 @@ from decorators import *
 
 #---------------------------------------Valiate Token----------------------------------------------#
 
-@application.route("/api/v1/token/validate", methods=["GET"])
-@token_required
+@application.route("/api/v1/token/validate", methods=["POST"])
+#@token_required
 def api_token_validate():
+    request_data = request.get_json()
     responseObject = {
         "status": "success",
         "message": "Token Valid.",
-        "token": True
+        "token": True,
+        "user": Users.get_user_by_username(request_data["username"], False)
     }
     return Response(dumps(responseObject), 200, mimetype='application/json')
 
@@ -42,7 +44,7 @@ def api_user_by_username():
         }
         response = Response(dumps(responseObject), 400, mimetype='application/json')
 
-    user = Users.get_user_by_username(username)
+    user = Users.get_user_by_username(username, False)
     if user == None:
         responseObject = {
             "status": "failure",
@@ -70,7 +72,7 @@ def api_user_by_username_exist():
         }
         response = Response(dumps(responseObject), 400, mimetype='application/json')
 
-    user = Users.get_user_by_username(username)
+    user = Users.get_user_by_username(username, False)
     if user == None:
         responseObject = {
             "status": "no",
@@ -145,7 +147,7 @@ def api_user_via_username(username):
     responseObject = {
         'status': 'success',
         'message': 'Successfully registered.',
-        'user': Users.get_user_by_username(username)
+        'user': Users.get_user_by_username(username, False)
     }
     return Response(dumps(responseObject), 200, mimetype='application/json')
 
