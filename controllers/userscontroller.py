@@ -7,7 +7,7 @@ from decorators import *
 #---------------------------------------Valiate Token----------------------------------------------#
 
 @application.route("/api/v1/token/validate", methods=["POST"])
-#@token_required
+@token_required
 def api_token_validate():
     request_data = request.get_json()
     responseObject = {
@@ -21,7 +21,7 @@ def api_token_validate():
 #---------------------------------------GET all users----------------------------------------------#
 
 @application.route("/api/v1/users/all", methods=["GET"])
-#@token_required
+@token_required
 def api_users_all():
     responseObject = {
         "status": "success",
